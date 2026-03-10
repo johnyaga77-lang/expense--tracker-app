@@ -38,26 +38,28 @@ class _HomepageState extends State<Homepage> {
               valueListenable: expenseListNotifire,
               builder: (context, expenseList,child) {
                 final total = calcTotalExpense();
-                return Container(
-                  height: 222,
-                  width: 358,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    gradient: LinearGradient(
-                      colors: [Color(0xFFFFD700),const Color.fromARGB(255, 107, 96, 38)],
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
+                return Center(
+                  child: Container(
+                    height: 222,
+                    width: 358,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      gradient: LinearGradient(
+                        colors: [Color(0xFFFFD700),const Color.fromARGB(255, 107, 96, 38)],
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        ),
+                    ),
+                    child: Padding(
+                      padding: EdgeInsets.all(16),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text("$total/-",style: GoogleFonts.plusJakartaSans(fontSize: 22,fontWeight: FontWeight.bold,color: Colors.white),),
+                          Text("Total Expenses",style: GoogleFonts.plusJakartaSans(fontSize: 14,fontWeight: FontWeight.w500,color: Colors.white),),
+                        ],
                       ),
-                  ),
-                  child: Padding(
-                    padding: EdgeInsets.all(16),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Text("$total/-",style: GoogleFonts.plusJakartaSans(fontSize: 22,fontWeight: FontWeight.bold,color: Colors.white),),
-                        Text("Total Expenses",style: GoogleFonts.plusJakartaSans(fontSize: 14,fontWeight: FontWeight.w500,color: Colors.white),),
-                      ],
                     ),
                   ),
                 );
@@ -75,7 +77,17 @@ class _HomepageState extends State<Homepage> {
                     itemBuilder: (context, index) {
                       final expense = expenseList[index];
               
-                      return  ExpenseItems(amount: expense.amount.toString(), label: expense.category, date: expense.date); 
+                      return  ExpenseItems(
+                        amount: expense.amount.toString(), 
+                        label: expense.category, 
+                        date: expense.date,
+                        onDelete: ()async{
+                            await  deleteExpense(
+                            expense.id ?? index,
+                          );
+                          setState(() {});
+                        },
+                        ); 
                   });
                 }
                 ),
@@ -91,10 +103,12 @@ class ExpenseItems extends StatelessWidget{
   String amount;
   String label;
   String date;
+  VoidCallback onDelete;
   ExpenseItems({
     required this.amount,
     required this.label,
     required this.date,
+    required this.onDelete,
   });
 
   @override
@@ -111,7 +125,39 @@ class ExpenseItems extends StatelessWidget{
               Text(label,style: GoogleFonts.plusJakartaSans(fontSize: 14,color: Color(0xFF9E9447)),),
             ],
           ),
-          Text(date,style: GoogleFonts.plusJakartaSans(fontSize: 14,color: Color(0xFF9E9447)),)
+         Row(
+          children: [
+            
+             Text(date,style: GoogleFonts.plusJakartaSans(fontSize: 14,color: Color(0xFF9E9447)),),
+             IconButton(onPressed: (){
+
+              }, 
+              icon: Icon(Icons.edit),
+              color: Colors.black,
+              iconSize: 15,
+              ),
+              IconButton(onPressed: (){
+                showDialog(
+                  context: context, 
+                  builder: (context) => AlertDialog(
+                    title: Text("Confirm Delete",style: GoogleFonts.plusJakartaSans(),),
+                    content: Text("Are you sure want to delete this Expense",style: GoogleFonts.plusJakartaSans(),),
+                    actions: [
+                      TextButton(onPressed: (){
+                          Navigator.of(context).pop();
+                      }, child: Text("Cancel",style: GoogleFonts.plusJakartaSans(),)),
+                      TextButton(onPressed: (){
+                          onDelete();
+                          Navigator.of(context).pop();
+                      }, child: Text("Delete",style: GoogleFonts.plusJakartaSans(color: Colors.red),),)
+                    ],
+                ));
+              }, 
+              icon: Icon(Icons.delete),
+              iconSize: 15,
+              ),
+          ],
+         )
         ],
       ),
     ); 

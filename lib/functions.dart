@@ -29,3 +29,9 @@ int calcTotalExpense() {
   );
 }
 
+Future <void> deleteExpense(int index) async{
+  final db = Hive.box<Expensing>('ExpenseDB');
+  db.delete(index);
+  getData();
+  expenseListNotifire.notifyListeners();
+}

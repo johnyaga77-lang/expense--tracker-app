@@ -26,31 +26,33 @@ class _BottombarState extends State<Bottombar> {
     ];
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: pages[selectedIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Color(0xFFFCFAF7),
-        currentIndex: selectedIndex,
-        onTap: onTapped,
-        selectedLabelStyle: GoogleFonts.plusJakartaSans(fontSize: 13,fontWeight: FontWeight.w500,color: Color(0xFF1C1A0D)),
-        selectedItemColor: Color(0xFF1C1A0D),
-        unselectedItemColor: Color(0xFF9E9447),
-        unselectedLabelStyle: GoogleFonts.plusJakartaSans(fontSize: 12,fontWeight: FontWeight.w500),
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: "Home",
-            ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.add),
-            label: "Add",
-            ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.history),
-            label: "History",
-            )
-        ] 
-        ),
+    return SafeArea(
+      child: Scaffold(
+        body: pages[selectedIndex],
+        bottomNavigationBar: BottomNavigationBar(
+          backgroundColor: Color(0xFFFCFAF7),
+          currentIndex: selectedIndex,
+          onTap: onTapped,
+          selectedLabelStyle: GoogleFonts.plusJakartaSans(fontSize: 13,fontWeight: FontWeight.w500,color: Color(0xFF1C1A0D)),
+          selectedItemColor: Color(0xFF1C1A0D),
+          unselectedItemColor: Color(0xFF9E9447),
+          unselectedLabelStyle: GoogleFonts.plusJakartaSans(fontSize: 12,fontWeight: FontWeight.w500),
+          items: [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: "Home",
+              ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.add),
+              label: "Add",
+              ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.history),
+              label: "History",
+              )
+          ] 
+          ),
+      ),
     );
   }
 }
