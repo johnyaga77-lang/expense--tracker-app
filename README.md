@@ -1,17 +1,17 @@
-# expensetracker
+# Flutter Expense Tracker
 
-A new Flutter project.
+Flutter mobile application with CI pipeline using GitHub Actions.
 
-## Getting Started
+## CI Pipeline
 
-This project is a starting point for a Flutter application.
+Automatically:
 
-A few resources to get you started if this is your first Flutter project:
+• Installs Flutter  
+• Runs flutter pub get  
+• Builds release APK  
+• Uploads APK artifact
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-# expense--tracker-app
+Tech stack:
+Flutter
+GitHub Actions
+CI/CD
